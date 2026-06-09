@@ -4,7 +4,7 @@
     "exclude": ["/assets/*"]
   },
   "globalHeaders": {
-    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https://medius.microsoft.com https://mediastream.microsoft.com https://eventtools.event.microsoft.com data:; connect-src 'self' https://eventtools.event.microsoft.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https://medius.microsoft.com https://mediusdl.event.microsoft.com https://mediastream.microsoft.com https://eventtools.event.microsoft.com data:; connect-src 'self' https://eventtools.event.microsoft.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests",
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
     "Referrer-Policy": "strict-origin-when-cross-origin",

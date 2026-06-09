@@ -9,6 +9,7 @@ const ALLOWED_LINK_HOSTS = [
 
 const ALLOWED_IMAGE_HOSTS = [
   'medius.microsoft.com',
+  'mediusdl.event.microsoft.com',
   'mediastream.microsoft.com',
   'eventtools.event.microsoft.com',
   'build.microsoft.com',

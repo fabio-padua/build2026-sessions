@@ -1,73 +1,76 @@
-# React + TypeScript + Vite
+# Build 2026 Session Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A professional web application to browse, search, and filter all Microsoft Build 2026 sessions.
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-19-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-6-blue) ![Vite](https://img.shields.io/badge/Vite-8-purple) ![Azure](https://img.shields.io/badge/Azure-Static%20Web%20Apps-blue)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- 🔍 **Full-text search** — sessions, speakers, session codes
+- 📅 **Filter by day** — browse sessions by event day
+- 🏷️ **Filter by type, level, topic, delivery format**
+- 📺 **On-demand links** — watch recorded sessions directly
+- 📱 **Responsive** — works on desktop, tablet, and mobile
+- ⚡ **Fast** — client-side filtering, no backend needed
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Quick Start
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open http://localhost:5173 in your browser.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Build for Production
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
+```
+
+Output is in `dist/` — ready for any static hosting.
+
+## Deploy to Azure Static Web Apps
+
+Run the deployment script:
+
+```powershell
+.\deploy.ps1
+```
+
+Or with custom parameters:
+
+```powershell
+.\deploy.ps1 -ResourceGroupName "my-rg" -Location "westus2" -AppName "my-build-explorer"
+```
+
+The GitHub Actions workflow (`.github/workflows/azure-static-web-apps.yml`) handles CI/CD automatically after the Static Web App is linked.
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | React 19 + TypeScript |
+| Build | Vite 8 |
+| Styling | CSS (custom, Microsoft Fluent-inspired) |
+| Hosting | Azure Static Web Apps |
+| Data | [Official Build 2026 session API](https://eventtools.event.microsoft.com/build2026-prod/fallback/session-all-en-us.json) |
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── FilterBar.tsx    # Search + filter dropdowns
+│   ├── Header.tsx       # App header with branding
+│   ├── SessionCard.tsx  # Individual session card
+│   └── States.tsx       # Loading, error, empty states
+├── hooks/
+│   ├── useFilters.ts    # Filter logic and options
+│   └── useSessions.ts   # Data fetching
+├── types/
+│   └── session.ts       # TypeScript interfaces
+├── App.tsx              # Main app component
+├── main.tsx             # Entry point
+└── index.css            # Global styles
 ```

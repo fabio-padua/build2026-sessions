@@ -1,4 +1,5 @@
 import type { Session } from '../types/session';
+import { safeLinkUrl, safeImageUrl } from '../utils/sanitize';
 
 interface SessionCardProps {
   session: Session;
@@ -21,7 +22,8 @@ function formatDate(dateStr: string): string {
 }
 
 export function SessionCard({ session }: SessionCardProps) {
-  const thumbnail = session.onDemandThumbnail || session.ogImage;
+  const thumbnail = safeImageUrl(session.onDemandThumbnail) || safeImageUrl(session.ogImage);
+  const onDemandUrl = safeLinkUrl(session.onDemand);
   const levelLabel = session.sessionLevel?.[0]?.displayValue || '';
   const typeLabel = session.sessionType?.displayValue || '';
   const locationLabel = session.location?.displayValue || '';
@@ -30,7 +32,7 @@ export function SessionCard({ session }: SessionCardProps) {
     <article className="session-card">
       {thumbnail && (
         <div className="card-thumbnail">
-          <img src={thumbnail} alt="" loading="lazy" />
+          <img src={thumbnail} alt="" loading="lazy" referrerPolicy="no-referrer" />
           {session.hasOnDemand && <span className="badge badge-ondemand">On Demand</span>}
           {session.heroSession && <span className="badge badge-hero">Featured</span>}
         </div>
@@ -93,9 +95,9 @@ export function SessionCard({ session }: SessionCardProps) {
           ))}
         </div>
 
-        {session.hasOnDemand && session.onDemand && (
+        {session.hasOnDemand && onDemandUrl && (
           <a
-            href={session.onDemand}
+            href={onDemandUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="watch-btn"

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { Session } from '../types/session';
+import { validateSessions } from '../utils/validate';
 
 const DATA_URL =
   'https://eventtools.event.microsoft.com/build2026-prod/fallback/session-all-en-us.json';
@@ -17,8 +18,12 @@ export function useSessions() {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();
       })
-      .then((data: Session[]) => {
-        setSessions(data);
+      .then((data: unknown) => {
+        const validated = validateSessions(data);
+        if (validated.length === 0) {
+          throw new Error('No valid sessions found in response');
+        }
+        setSessions(validated);
         setLoading(false);
       })
       .catch((err) => {
